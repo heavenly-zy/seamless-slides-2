@@ -33,11 +33,11 @@ body {
 
 .images {
     display: flex;
+    transition: all 2s;
 }
 
 .images>img {
     width: 100%;
-    transition: all 4s;
 }
 
 #menu {
