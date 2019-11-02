@@ -33,7 +33,7 @@ function autoPlay() {
     let timer = setInterval(function () {
         goToSlides(current + 1)
     }, 4000)
-    $('.gallery').on('mouseenter', function () {
+    $('.gallery , #controls').on('mouseenter', function () {
         window.clearInterval(timer)
     }).on('mouseleave', function () {
         timer = setInterval(function () {
