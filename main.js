@@ -8,7 +8,12 @@ makeFakeSlides()
 $slides.css({ transform: 'translateX(-920px)' })
 bindEvents()
 
-
+$('#previous').on('click', function () {
+    goToSlides(current - 1)
+})
+$('#next').on('click', function () {
+    goToSlides(current + 1)
+})
 
 function makeFakeSlides() {
     // 把#slides中第一张和最后一张图片克隆
@@ -28,6 +33,13 @@ function bindEvents() {
 }
 
 function goToSlides(index) {
+    if (index > $buttons.length) {
+        index = 1
+    } else if (index < 1) {
+        index = $buttons.length
+    }
+    console.log('current', 'index')
+    console.log(current, index)
     if (current === $buttons.length && index === 1) {
         console.log('从最后一张到第一张')
         $slides.css({ transform: `translateX(${-($buttons.length + 1) * 920}px)` })
