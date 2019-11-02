@@ -1,7 +1,7 @@
 let $buttons = $('#menu>ul>#menuItem')
 let $slides = $('#slides')
 let $images = $slides.children('img')
-let current = 0
+let current = 1
 
 
 makeFakeSlides()
@@ -20,42 +20,35 @@ function makeFakeSlides() {
 }
 
 function bindEvents() {
-    $buttons.eq(0).on('click', function () {
-        if (current == 3) {
-            console.log('从最后一张到第一张')
-            $slides.css({ transform: 'translateX(-4600px)' })
-                .one('transitionend', function () {
-                    $slides.hide()
-                        .offset()
-                    $slides.css({ transform: 'translateX(-920px)' })
-                        .show()
-                })
-        } else {
-            $slides.css({ transform: 'translateX(-920px)' })
-        }
-        current = 0
+    $('#menu>ul').on('click', '#menuItem', function (e) { // 事件委托
+        let $li = $(e.currentTarget)
+        let index = $li.index()
+        goToSlides(index)
     })
-    $buttons.eq(1).on('click', function () {
-        $slides.css({ transform: 'translateX(-1840px)' })
-        current = 1
-    })
-    $buttons.eq(2).on('click', function () {
-        $slides.css({ transform: 'translateX(-2760px)' })
-        current = 2
-    })
-    $buttons.eq(3).on('click', function () {
-        if (current == 0) {
-            console.log('从第一张到最后一张')
-            $slides.css({ transform: 'translateX(0px)' })
-                .one('transitionend', function () {
-                    $slides.hide()
-                        .offset()
-                    $slides.css({ transform: 'translateX(-3680px)' })
-                        .show()
-                })
-        } else {
-            $slides.css({ transform: 'translateX(-3680px)' })
-        }
-        current = 3
-    })
+}
+
+function goToSlides(index) {
+    if (current === $buttons.length && index === 1) {
+        console.log('从最后一张到第一张')
+        $slides.css({ transform: `translateX(${-($buttons.length + 1) * 920}px)` })
+            .one('transitionend', function () {
+                $slides.hide()
+                    .offset()
+                $slides.css({ transform: `translateX(${-(index) * 920}px)` })
+                    .show()
+            })
+    } else if (current === 1 && index === $buttons.length) {
+        console.log('从第一张到最后一张')
+        $slides.css({ transform: 'translateX(0px)' })
+            .one('transitionend', function () {
+                $slides.hide()
+                    .offset()
+                $slides.css({ transform: `translateX(${-(index) * 920}px)` })
+                    .show()
+            })
+    } else {
+        console.log('普通的切换')
+        $slides.css({ transform: `translateX(${-(index) * 920}px)` })
+    }
+    current = index
 }
