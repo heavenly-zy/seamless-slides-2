@@ -28,7 +28,6 @@ document.addEventListener('visibilitychange', () => {
 
 
 
-
 // 工具函数
 function autoPlay() {
     let timer = setInterval(function () {
@@ -55,6 +54,7 @@ function makeFakeSlides() {
 
 function bindEvents() {
     $('#menu>ul').on('click', '#menuItem', function (e) { // 事件委托
+        $(e.currentTarget).addClass('active').siblings().removeClass('active')
         let $li = $(e.currentTarget)
         let index = $li.index()
         goToSlides(index)
