@@ -15,6 +15,35 @@ $('#next').on('click', function () {
     goToSlides(current + 1)
 })
 
+const timer2 = autoPlay()
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        window.clearInterval(timer2)
+    } else {
+        autoPlay()
+    }
+})
+
+
+
+
+
+
+// 工具函数
+function autoPlay() {
+    let timer = setInterval(function () {
+        goToSlides(current + 1)
+    }, 4000)
+    $('.gallery').on('mouseenter', function () {
+        window.clearInterval(timer)
+    }).on('mouseleave', function () {
+        timer = setInterval(function () {
+            goToSlides(current + 1)
+        }, 4000)
+    })
+    return timer
+}
+
 function makeFakeSlides() {
     // 把#slides中第一张和最后一张图片克隆
     let $firstCopy = $images.eq(0).clone(true)
